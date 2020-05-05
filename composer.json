@@ -1,0 +1,26 @@
+{
+	"name" : "limanweb/eloquent-logger",
+	"description" : "Extensions for Laravel Eloquent\\Model logging",
+	"keywords" : [
+		"laravel",
+		"eloquent",
+		"model",
+		"logger"
+	],
+	"type" : "package",
+	"license" : "MIT",
+	"authors" : [{
+			"name" : "Ilya Khondozhko",
+			"email" : "limanweb@mail.ru"
+		}
+	],
+	"require" : {
+		"php" : ">=7.2.0"
+	},
+	"autoload" : {
+		"psr-4" : {
+			"Limanweb\\EloquentLogger\\" : "src"
+		}
+	},
+	"minimum-stability" : "dev"
+}
