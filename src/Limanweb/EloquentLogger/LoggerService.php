@@ -11,17 +11,17 @@ class LoggerService
      * @param string|null $path
      * @return mixed
      */
-    public static function config($path = null)
+    public static function config($path = null, $default = null)
     {
         if (is_null(self::$config)) {
             self::$config = config('limanweb.eloquent_logger');
         }
 
         if ($path) {
-            return \Arr::get(self::$config, $path);
+            return \Arr::get(self::$config, $path) ?? $default;
         }
 
-        return self::$config;
+        return self::$config ?? $default;
     }
 
     /**
@@ -29,7 +29,7 @@ class LoggerService
      */
     public static function initLogger()
     {
-        foreach (array_keys(self::config('models')) as $modelName) {
+        foreach (array_keys(self::config('models', [])) as $modelName) {
             if (class_exists($modelName)) {
                 $modelName::observe(LoggerObserver::class);
             }
@@ -56,7 +56,7 @@ class LoggerService
         }
 
         $excludeFields = array_merge(
-            self::config('exclude_fields') ?? [],
+            self::config('exclude_fields', []),
             $modelConfig['exclude_fields'] ?? []
         );
 

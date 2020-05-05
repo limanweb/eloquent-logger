@@ -2,24 +2,26 @@
 
 ## Installation
 
-Run command to install a package into you project
+1. Run command to install a package into you project
 
 	composer require limanweb/eloquent-logger
 
-Add package provider into `providers` section of your `config/app.php`
+2. Add package provider into `providers` section of your `config/app.php`
 
 	'providers' => [
 		...
 		\Limanweb\EloquentLogger\ServiceProvider::class,
 	],
 
-Run command to publish package's config and migration
+3. Run command to publish package's config and migration
 
-	php artisan vendor:publish --provider=Limanweb\EloquentLogger\ServiceProvider
-	
+	php artisan vendor:publish
+
+and choise package `\Limanweb\EloquentLogger\ServiceProvider` to publish.	
+
 Now you have configuration file `config/limanweb/eloquent_logger.php`.
 
-If you have changed user ID type to UUID in your project, then you must configure it in `user` section of configuration.
+4. If you have changed user ID type to UUID in your project, then you must configure it in `user` section of configuration.
 
 	'user' => [
 		...
@@ -27,9 +29,13 @@ If you have changed user ID type to UUID in your project, then you must configur
 		'key_create_method' => 'uuid',
 	],
 	
-Run migrate command.
+5. Run migrate command.
 
 	php artisan migrate
+	
+6. In `App\Providers\EventServiceProvider` add next line to bottom of `boot()`
+
+    \Limanweb\EloquentLogger\LoggerService::initLogger();
 	
 ## Configuration
 
