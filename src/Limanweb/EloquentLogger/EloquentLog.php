@@ -1,5 +1,4 @@
 <?php
-
 namespace Limanweb\EloquentLogger;
 
 use Illuminate\Database\Eloquent\Model;
@@ -12,13 +11,19 @@ class EloquentLog extends Model
 {
 
     const OP_CREATED = 'created';
+
     const OP_UPDATED = 'updated';
+
     const OP_DELETED = 'deleted';
 
     protected $table = 'eloquent_logs';
+
     protected $primaryKey = 'id';
+
     protected $keyType = 'int';
+
     public $incrementing = true;
+
     public $timestamps = false;
 
     /**
@@ -33,11 +38,11 @@ class EloquentLog extends Model
         'ref_int_id' => 'integer',
         'operation' => 'string',
         'details' => 'json',
-        'created_at' => 'datetime',
+        'created_at' => 'datetime'
     ];
 
     /**
-     * 
+     * Booting model
      */
     public static function boot()
     {
@@ -46,22 +51,21 @@ class EloquentLog extends Model
         static::creating(function ($model) {
             $model->setCreatedAt($model->freshTimestamp());
         });
-
     }
 
     /**
-     * 
+     *
      * @param unknown ...$args
      */
     public function __construct(...$args)
     {
-        parent::__construct($args);
+        parent::__construct(...$args);
         $this->casts['user_id'] = config('limanweb.eloquent_logger.user.key_cast', 'integer');
     }
 
     /**
      * Accessor for 'before' model data
-     * 
+     *
      * @return array|NULL
      */
     public function getModelBeforeAttribute()
@@ -83,7 +87,7 @@ class EloquentLog extends Model
 
     /**
      * Accessor for 'after' model data
-     * 
+     *
      * @return array|NULL
      */
     public function getModelAfterAttribute()
@@ -93,7 +97,7 @@ class EloquentLog extends Model
 
     /**
      * Mutator for 'after' model data
-     * 
+     *
      * @param array|NULL $value
      */
     public function setModelAfterAttribute($value)
@@ -105,7 +109,7 @@ class EloquentLog extends Model
 
     /**
      * Mutator for logged-model ref-fields
-     * 
+     *
      * @param Model $model
      */
     public function setRefAttribute(Model $model)
@@ -120,28 +124,27 @@ class EloquentLog extends Model
     }
 
     /**
-     * 
+     *
      * @param Builder $query
      * @param Model $model
      * @return mixed|\Illuminate\Database\Eloquent\Builder
      */
-    public function scopeByModel(Builder $query, Model $model) {
-
+    public function scopeByModel(Builder $query, Model $model)
+    {
         $key = $model->getKey();
 
-        return $query
-            ->where('ref_type', get_class($model))
-            ->when(is_string($key), function($query) {
+        return $query->where('ref_type', get_class($model))
+            ->when(is_string($key), function ($query) {
                 $query->where('ref_uuid_id', $key);
             })
-            ->when(is_integer($key), function($query) {
+            ->when(is_integer($key), function ($query) {
                 $query->where('ref_int_id', $key);
             });
     }
 
     /**
      * User model relation
-     * 
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user()
@@ -152,7 +155,6 @@ class EloquentLog extends Model
 
         return $this->belongsTo($userModel);
     }
-    
-    // @todo Relation for logged model
 
+    // @todo Relation for logged model
 }
