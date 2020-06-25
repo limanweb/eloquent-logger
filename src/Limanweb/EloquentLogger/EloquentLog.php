@@ -60,6 +60,9 @@ class EloquentLog extends Model
     public function __construct(...$args)
     {
         parent::__construct(...$args);
+
+        // Cast for 'user_id' get from configuration.
+        // By default is 'integer'.
         $this->casts['user_id'] = config('limanweb.eloquent_logger.user.key_cast', 'integer');
     }
 
@@ -156,5 +159,24 @@ class EloquentLog extends Model
         return $this->belongsTo($userModel);
     }
 
-    // @todo Relation for logged model
+    /**
+     * Relation for reference model by UUID-key
+     *
+     * @return unknown
+     */
+    public function refUuid()
+    {
+        return $this->morphTo(null, 'ref_type', 'ref_uuid_id');
+    }
+
+    /**
+     * Relation for reference model by INT-key
+     *
+     * @return unknown
+     */
+    public function refInt()
+    {
+        return $this->morphTo(null, 'ref_type', 'ref_int_id');
+    }
+
 }
