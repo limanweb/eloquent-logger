@@ -1,8 +1,12 @@
 # Changelog for limanweb/eloquent-logger
 
+## 1.0.3 (2020-06-25)
+
+Relations **refUuid** and **refInt** added into **\Limanweb\EloquentLogger\EloquentLog** model
+
 ## 1.0.2 (2020-06-24)
 
-MassAssignmentException bug for EloquentLog model fixed 
+**MassAssignmentException** bug in **\Limanweb\EloquentLogger\EloquentLog** model fixed 
 
 ## 1.0.1 (2020-05-??)
 
