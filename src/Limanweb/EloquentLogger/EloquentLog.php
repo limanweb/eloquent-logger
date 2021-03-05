@@ -42,18 +42,6 @@ class EloquentLog extends Model
     ];
 
     /**
-     * Booting model
-     */
-    public static function boot()
-    {
-        parent::boot();
-
-        static::creating(function ($model) {
-            $model->setCreatedAt($model->freshTimestamp());
-        });
-    }
-
-    /**
      *
      * @param unknown ...$args
      */
