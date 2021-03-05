@@ -79,6 +79,7 @@ class LoggerService
             $modelAudit->modelAfter = $modelAfter;
             $modelAudit->operation = $operation;
             $modelAudit->user_id = \Auth::user()->id ?? null;
+            $modelAudit->created_at = now();
 
             $modelAudit->save();
         }
